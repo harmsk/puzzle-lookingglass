@@ -43,12 +43,15 @@
 
 package org.alice.ide;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.lgna.project.ProgramTypeUtilities;
 import org.lgna.project.Version;
 
+import edu.cmu.cs.dennisc.java.io.FileUtilities;
+import edu.cmu.cs.dennisc.java.util.logging.Logger;
 import edu.wustl.lookingglass.ide.LookingGlassIDE;
 import edu.wustl.lookingglass.project.TypeClassNotFoundException;
 import edu.wustl.lookingglass.study.StudyConfiguration;
@@ -131,7 +134,7 @@ public abstract class ProjectApplication extends org.lgna.croquet.PerspectiveApp
 
 	public static final String getApplicationName() {
 		/* <lg/> We are Looking Glass */
-		return "Looking Glass";
+		return "Puzzle Looking Glass";
 	}
 
 	public static final String getVersionText() {
@@ -147,7 +150,7 @@ public abstract class ProjectApplication extends org.lgna.croquet.PerspectiveApp
 
 	public static final String getApplicationSubPath() {
 		// <lg/> Looking Glass only uses its real name
-		return getApplicationName();
+		return "Looking Glass";
 	}
 
 	// <lg>
@@ -603,7 +606,13 @@ public abstract class ProjectApplication extends org.lgna.croquet.PerspectiveApp
 	public java.io.File getMyProjectsDirectory() {
 		// <lg/> Use a different path for user studies
 		if( edu.wustl.lookingglass.study.StudyConfiguration.INSTANCE.getUserProjectsDirectory() == null ) {
-			return org.alice.ide.croquet.models.ui.preferences.UserProjectsDirectoryState.getInstance().getDirectoryEnsuringExistance();
+			File dir = new File( FileUtilities.getDocumentsDirectory(), IDE.getApplicationSubPath() + "/Puzzles" );
+			try {
+				dir.mkdirs();
+			} catch( Throwable t ) {
+				Logger.throwable( t, this );
+			}
+			return dir;
 		} else {
 			return edu.wustl.lookingglass.study.StudyConfiguration.INSTANCE.getUserProjectsDirectory();
 		}

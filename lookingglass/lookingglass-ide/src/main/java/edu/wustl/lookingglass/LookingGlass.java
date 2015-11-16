@@ -106,7 +106,7 @@ public class LookingGlass {
 			// Appliation Icon for Mac
 			String macAppIcon = System.getProperty( "apple.awt.application.icon" );
 			if( macAppIcon == null ) {
-				System.setProperty( "apple.awt.application.icon", new java.io.File( edu.cmu.cs.dennisc.app.ApplicationRoot.getApplicationDirectory(), "lookingglass.icns" ).getAbsolutePath() );
+				System.setProperty( "apple.awt.application.icon", new java.io.File( edu.cmu.cs.dennisc.app.ApplicationRoot.getApplicationDirectory(), "logo.icns" ).getAbsolutePath() );
 			}
 		}
 

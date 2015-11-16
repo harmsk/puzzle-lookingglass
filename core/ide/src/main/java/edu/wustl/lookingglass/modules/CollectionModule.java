@@ -54,7 +54,7 @@ import edu.wustl.lookingglass.community.exceptions.CommunityApiException;
  * The abstract class {@code CollectionModule} is the super class of all data
  * collection modules. Provides appropriate methods for handling thrown
  * exceptions and sending collected data to the LG Community.
- * 
+ *
  * @author Michael Pogran
  */
 public abstract class CollectionModule implements AbstractCollectionModule {
@@ -64,18 +64,18 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	 * The entry point for a {@code CollectionModule}. This method is called by
 	 * a {@link edu.wustl.lookingglass.modules.CollectionModuleLoader
 	 * CollectionModuleLoader} through reflection.
-	 * 
+	 *
 	 * <p>
 	 * Sets the moduleId for a collection module, registers the module with the
 	 * {@link edu.wustl.lookingglass.modules.CollectionModuleManager
 	 * CollectionModuleManager}, and calls {@link #performSetup()}.
-	 * 
+	 *
 	 */
 	@Override
 	public final void initialize( int id ) {
 		this.moduleId = id;
 		try {
-			edu.wustl.lookingglass.ide.LookingGlassIDE.getModuleManager().addModule( this );
+			//			edu.wustl.lookingglass.ide.LookingGlassIDE.getModuleManager().addModule( this );
 			performSetup();
 		} catch( Throwable t ) {
 			handleException( t );
@@ -84,7 +84,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 
 	/**
 	 * Determines the id of the collection module.
-	 * 
+	 *
 	 * @return the id of the associated IdeCollectionModule on the LG Community.
 	 */
 	public int getModuleId() {
@@ -96,17 +96,17 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	 * {@link edu.wustl.lookingglass.modules.CollectionModuleManager
 	 * CollectionModuleManager} and sending an appropriate report to the LG
 	 * Community.
-	 * 
+	 *
 	 * @param throwable the exception to be reported
 	 */
 	protected void handleException( Throwable throwable ) {
-		edu.wustl.lookingglass.ide.LookingGlassIDE.getModuleManager().removeModule( this );
+		//		edu.wustl.lookingglass.ide.LookingGlassIDE.getModuleManager().removeModule( this );
 		this.sendException( throwable.toString(), edu.cmu.cs.dennisc.issue.IssueUtilities.getThrowableText( throwable ) );
 	}
 
 	/**
 	 * Creates a {@code ModuleResultPacket} and sends it to the LG Community.
-	 * 
+	 *
 	 * @param result the result to be sent to the LG Community
 	 */
 	protected void sendResult( final String result ) {
@@ -129,7 +129,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	 * Creates a {@link java.lang.Runnable Runnable} object calling the module
 	 * {@link AbstractCollectionModule#transactionTask(Event event)
 	 * transationTask} method.
-	 * 
+	 *
 	 * @param event the transaction event
 	 * @return Runnable object
 	 */
@@ -150,7 +150,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	 * Creates a {@link java.lang.Runnable Runnable} object calling the module
 	 * {@link AbstractCollectionModule#communityEventTask(CommunityControllerEvent event, boolean isResponse)
 	 * communityEventTask} method.
-	 * 
+	 *
 	 * @param event community controller event
 	 * @param isResponse indicates whether event is a response or request
 	 * @return Runnable object
@@ -171,7 +171,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	/**
 	 * Creates a {@link java.lang.Runnable Runnable} object calling the module
 	 * {@link AbstractCollectionModule#timedTask() timedTask} method.
-	 * 
+	 *
 	 * @return Runnable object
 	 */
 	protected Runnable createTimedTaskRunnable() {
@@ -191,7 +191,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 	 * Creates a {@link java.lang.Runnable Runnable} object calling the module
 	 * {@link AbstractCollectionModule#programCloseTask() programCloseTask}
 	 * method.
-	 * 
+	 *
 	 * @return Runnable object
 	 */
 	protected Runnable createprogramCloseTaskRunnable() {
@@ -209,7 +209,7 @@ public abstract class CollectionModule implements AbstractCollectionModule {
 
 	/**
 	 * Creates a {@code ModuleResultPacket} and sends it to the LG Community.
-	 * 
+	 *
 	 * @param exception to be sent to the LG Community
 	 */
 	private void sendException( final String exception, final String message ) {

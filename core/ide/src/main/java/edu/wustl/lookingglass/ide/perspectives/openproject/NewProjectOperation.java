@@ -44,7 +44,6 @@
  *******************************************************************************/
 package edu.wustl.lookingglass.ide.perspectives.openproject;
 
-
 /**
  * @author Michael Pogran
  */
@@ -64,7 +63,7 @@ public class NewProjectOperation extends ReturnToOpenProjectPerspective {
 
 	@Override
 	protected edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.OpenProjectTab getTabForReturn( edu.wustl.lookingglass.ide.perspectives.openproject.OpenProjectComposite composite ) {
-		return composite.getNewProjectComposite();
+		return null;//composite.getNewProjectComposite();
 	}
 
 }

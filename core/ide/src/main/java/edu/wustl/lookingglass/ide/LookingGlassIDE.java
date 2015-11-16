@@ -66,7 +66,6 @@ import edu.wustl.lookingglass.croquetfx.ThreadHelper;
 import edu.wustl.lookingglass.ide.perspectives.puzzle.CompletionPuzzlePerspective;
 import edu.wustl.lookingglass.ide.program.TimeScrubProgramImp;
 import edu.wustl.lookingglass.ide.views.OpaqueLayer;
-import edu.wustl.lookingglass.modules.CollectionModuleManager;
 import edu.wustl.lookingglass.project.TypeClassNotFoundException;
 import edu.wustl.lookingglass.puzzle.CompletionPuzzle;
 import edu.wustl.lookingglass.puzzle.PuzzleProjectProperties;
@@ -77,7 +76,7 @@ import javafx.stage.Stage;
 
 public class LookingGlassIDE extends org.alice.stageide.StageIDE {
 
-	public static final String APPLICATION_NAME = "Looking Glass";
+	public static final String APPLICATION_NAME = "Puzzle Looking Glass";
 
 	public static final VersionNumber APPLICATION_VERSION;
 
@@ -121,7 +120,7 @@ public class LookingGlassIDE extends org.alice.stageide.StageIDE {
 
 	// There is only one community controller
 	public static final CommunityController COMMUNITY_CONTROLLER = new CommunityController( UserProjectsDirectoryState.getInstance().getDirectory() );
-	public static final CollectionModuleManager MODULE_MANAGER = new CollectionModuleManager();
+	//	public static final CollectionModuleManager MODULE_MANAGER = new CollectionModuleManager();
 
 	private static final List<Image> APPLICATION_ICONS = new java.util.ArrayList<java.awt.Image>();
 
@@ -155,7 +154,7 @@ public class LookingGlassIDE extends org.alice.stageide.StageIDE {
 
 		this.initialize( args );
 		this.initializeCommunityConnection();
-		MODULE_MANAGER.initialize();
+		//		MODULE_MANAGER.initialize();
 		PuzzleProjectProperties.intialize();
 
 		// Restore the window state
@@ -283,7 +282,7 @@ public class LookingGlassIDE extends org.alice.stageide.StageIDE {
 
 		final boolean remixPuzzle = options.has( REMIX_PUZZLE_ARG );
 
-		this.isPuzzleEditorEnabled = ( options.has( PUZZLE_EDITOR_ARG ) || ( Boolean.valueOf( System.getProperty( "edu.wustl.lookingglass.puzzle.editor", "false" ) ) ) );
+		this.isPuzzleEditorEnabled = ( options.has( PUZZLE_EDITOR_ARG ) || ( Boolean.valueOf( System.getProperty( "edu.wustl.lookingglass.puzzle.editor", "true" ) ) ) );
 
 		if( projectFilename != null ) {
 			java.io.File projectFile = new java.io.File( projectFilename );
@@ -398,13 +397,13 @@ public class LookingGlassIDE extends org.alice.stageide.StageIDE {
 		return COMMUNITY_CONTROLLER;
 	}
 
-	static public edu.wustl.lookingglass.modules.CollectionModuleManager getModuleManager() {
-		return MODULE_MANAGER;
-	}
-
-	public edu.wustl.lookingglass.modules.CollectionModuleManager getCollectionModuleManager() {
-		return MODULE_MANAGER;
-	}
+	//	static public edu.wustl.lookingglass.modules.CollectionModuleManager getModuleManager() {
+	//		return MODULE_MANAGER;
+	//	}
+	//
+	//	public edu.wustl.lookingglass.modules.CollectionModuleManager getCollectionModuleManager() {
+	//		return MODULE_MANAGER;
+	//	}
 
 	public PuzzleProjectProperties getPuzzleProjectProperties() {
 		return this.puzzleProjectProperties;

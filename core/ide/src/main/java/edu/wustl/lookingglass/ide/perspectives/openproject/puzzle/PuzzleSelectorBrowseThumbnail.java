@@ -1,6 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2008, 2015, Washington University in St. Louis.
- * All rights reserved.
+/**
+ * Copyright (c) 2008-2014, Washington University in St. Louis. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -41,111 +40,84 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING FROM OR OTHERWISE RELATING TO
  * THE USE OF OR OTHER DEALINGS WITH THE SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *******************************************************************************/
+ */
 package edu.wustl.lookingglass.ide.perspectives.openproject.puzzle;
+
+import java.io.File;
 
 import org.lgna.croquet.icon.IconSize;
 
+import edu.cmu.cs.dennisc.java.io.FileUtilities;
 import edu.wustl.lookingglass.croquetfx.FxComponent;
-import edu.wustl.lookingglass.croquetfx.ThreadHelper;
 import edu.wustl.lookingglass.ide.LookingGlassTheme;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 /**
  * @author Kyle J. Harms
  */
-public class PuzzleSelectorThumbnail extends FxComponent {
+public class PuzzleSelectorBrowseThumbnail extends FxComponent {
 
-	private PuzzleProject puzzleProject;
+	private static File lastDir = FileUtilities.getDefaultDirectory();
 
-	@FXML Pane disabledPane;
-	@FXML VBox thumbnail;
-
-	@FXML StackPane stackPane;
-	@FXML ImageView scene;
-	@FXML ImageView emblem;
-	@FXML HBox playOverlay;
-	@FXML ProgressIndicator loading;
-	@FXML ImageView play;
-
+	@FXML Button browse;
 	@FXML Label title;
+	@FXML VBox thumbnail;
+	final private FileChooser fileChooser;
 
-	private boolean isEnabled = true;
-	private Runnable onClicked;
+	private final PuzzleSelectorPane selectorPane;
 
-	public enum PuzzleType {
-		PUZZLE,
-		LOCKED,
-		COMPLETED
-	}
+	public PuzzleSelectorBrowseThumbnail( PuzzleSelectorPane selectorPane ) {
+		super( PuzzleSelectorBrowseThumbnail.class );
+		this.selectorPane = selectorPane;
 
-	private PuzzleType type;
+		File dir = FileUtilities.getDefaultDirectory();
+		if( lastDir.exists() && lastDir.isDirectory() ) {
+			dir = lastDir;
+		}
 
-	public PuzzleSelectorThumbnail( PuzzleType type ) {
-		super( PuzzleSelectorThumbnail.class );
-		this.type = type;
+		this.fileChooser = new FileChooser();
+		this.fileChooser.setTitle( "Open Puzzle" );
+		this.fileChooser.setInitialDirectory( dir );
+		this.fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter( "Looking Glass Projects", "*.lgp" ),
+				new FileChooser.ExtensionFilter( "All Files", "*.*" ) );
 
-		this.play.setImage( LookingGlassTheme.getFxImage( "media-playback-start", IconSize.MEDIUM ) );
-
-		// Hide the emblem in this version, since everything is a puzzle.
-		//		String emblemIcon = null;
-		//		switch( this.type ) {
-		//		case PUZZLE:
-		//			emblemIcon = "emblem-puzzle";
-		//			break;
-		//		case LOCKED:
-		//			emblemIcon = "emblem-puzzle-locked";
-		//			break;
-		//		case COMPLETED:
-		//			emblemIcon = "emblem-puzzle-completed";
-		//			break;
-		//		}
-		//		this.emblem.setImage( LookingGlassTheme.getFxImage( emblemIcon, IconSize.MEDIUM ) );
-		this.emblem.setVisible( false );
-	}
-
-	public void initialize( PuzzleProject project ) {
-		ThreadHelper.runOnFxThread( () -> {
-			this.puzzleProject = project;
-
-			this.isEnabled = this.puzzleProject.getProject().doAllTypeClassesExist();
-			this.disabledPane.setVisible( !this.isEnabled );
-
-			this.scene.setImage( this.puzzleProject.getImage() );
-			this.title.setText( this.puzzleProject.getTitle() );
-			this.loading.setVisible( false );
-
-			if( this.isEnabled ) {
-				this.thumbnail.setOnMouseEntered( ( event ) -> {
-					this.getScene().setCursor( Cursor.HAND );
-					this.playOverlay.setVisible( true );
-				} );
-				this.thumbnail.setOnMouseExited( ( event ) -> {
-					this.getScene().setCursor( Cursor.DEFAULT );
-					this.playOverlay.setVisible( false );
-				} );
-
-				this.registerMouseEvent( this.thumbnail, this.thumbnail.onMouseClickedProperty(), this::handleSelectedEvent );
-			}
+		this.browse.setGraphic( LookingGlassTheme.getFxImageView( "document-open", IconSize.LARGE ) );
+		this.thumbnail.setOnMouseEntered( ( event ) -> {
+			this.getScene().setCursor( Cursor.HAND );
 		} );
+		this.thumbnail.setOnMouseExited( ( event ) -> {
+			this.getScene().setCursor( Cursor.DEFAULT );
+		} );
+
+		this.register( this.browse, this::handleBrowseAction );
+		this.registerMouseEvent( this.thumbnail, this.thumbnail.onMouseClickedProperty(), this::handleSelectedEvent );
+	}
+
+	private void handleBrowseAction( ActionEvent event ) {
+		this.browsePuzzles();
 	}
 
 	private void handleSelectedEvent( MouseEvent event ) {
-		if( this.onClicked != null ) {
-			this.onClicked.run();
-		}
+		this.browsePuzzles();
 	}
 
-	public void setOnClicked( Runnable runnable ) {
-		this.onClicked = runnable;
+	private void browsePuzzles() {
+		File file = fileChooser.showOpenDialog( null );
+		if( file != null ) {
+			File dir = file.getParentFile();
+			if( ( dir != null ) && dir.exists() && dir.isDirectory() ) {
+				lastDir = dir;
+			}
+			PuzzleProject project = new PuzzleProject( file );
+			this.selectorPane.playPuzzle( project );
+		}
 	}
 }

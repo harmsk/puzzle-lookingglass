@@ -86,7 +86,7 @@ public class ReturnToOpenProjectPerspective extends org.lgna.croquet.Operation {
 	}
 
 	protected edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.OpenProjectTab getTabForReturn( OpenProjectComposite composite ) {
-		return composite.getWelcomeComposite();
+		return composite.getPuzzlesComposite();
 	}
 
 	@Override

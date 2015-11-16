@@ -63,7 +63,7 @@ public final class SystemExitOperation extends org.lgna.croquet.ActionOperation 
 
 		edu.wustl.lookingglass.study.StudyConfiguration.INSTANCE.getStudyLogger().log( java.util.logging.Level.INFO, "exited ide" );
 
-		ide.getCollectionModuleManager().handleProgramClose();
+		//		ide.getCollectionModuleManager().handleProgramClose();
 
 		ide.preservePreferences();
 		//</lg>

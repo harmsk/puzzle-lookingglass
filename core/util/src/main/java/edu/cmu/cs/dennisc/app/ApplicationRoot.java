@@ -49,7 +49,7 @@ public class ApplicationRoot {
 	private static final String DEFAULT_APPLICATION_ROOT_SYSTEM_PROPERTY = "org.alice.ide.rootDirectory";
 	// TODO: We need to determine a way to standardize this... this scattered all over the code.
 	// Can Maven filtered resources can help us solve this problem?
-	private static final String DEFAULT_APPLICATION_NAME = "Looking Glass";
+	private static final String DEFAULT_APPLICATION_NAME = "Puzzle Looking Glass";
 
 	private static java.io.File rootDirectory;
 

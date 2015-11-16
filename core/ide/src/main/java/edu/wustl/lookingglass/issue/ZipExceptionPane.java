@@ -44,15 +44,14 @@
  *******************************************************************************/
 package edu.wustl.lookingglass.issue;
 
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-
 import org.alice.ide.perspectives.noproject.NoProjectPerspective;
 
 import edu.wustl.lookingglass.croquetfx.components.DialogOptionButton;
 import edu.wustl.lookingglass.croquetfx.components.DialogOptionButtonGroup;
 import edu.wustl.lookingglass.ide.LookingGlassIDE;
 import edu.wustl.lookingglass.ide.perspectives.openproject.OpenProjectComposite;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 
 /**
  * @author Michael Pogran
@@ -93,15 +92,15 @@ public class ZipExceptionPane extends ExceptionPane {
 	}
 
 	private void handleSelectNewAction( javafx.event.ActionEvent event ) {
-		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnFxThread( ( ) -> {
+		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnFxThread( () -> {
 			getDialog().close();
 		} );
 
-		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( ( ) -> {
+		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( () -> {
 			NoProjectPerspective noProjectPerspective = LookingGlassIDE.getActiveInstance().getDocumentFrame().getNoProjectPerspective();
 			OpenProjectComposite openProjectComposite = noProjectPerspective.getMainComposite();
 			LookingGlassIDE.getActiveInstance().setPerspective( noProjectPerspective );
-			openProjectComposite.getTabState().setValueTransactionlessly( openProjectComposite.getExistingProjectComposite() );
+			openProjectComposite.getTabState().setValueTransactionlessly( openProjectComposite.getPuzzlesComposite() );
 		} );
 	}
 
@@ -208,11 +207,11 @@ public class ZipExceptionPane extends ExceptionPane {
 		org.alice.ide.uricontent.FileProjectLoader loader = new org.alice.ide.uricontent.FileProjectLoader( repairFile );
 
 		if( shouldSave && !( org.alice.ide.ProjectApplication.getActiveInstance().isProjectUpToDateWithFile() ) ) {
-			edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( ( ) -> {
+			edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( () -> {
 				org.alice.ide.croquet.models.projecturi.SaveProjectOperation.getInstance().fire();
 			} );
 		}
-		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( ( ) -> {
+		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( () -> {
 			edu.wustl.lookingglass.ide.LookingGlassIDE.getActiveInstance().loadProjectFrom( loader );
 		} );
 		getDialog().close();

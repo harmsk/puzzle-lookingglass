@@ -55,11 +55,8 @@ import org.lgna.croquet.history.CompletionStep;
 import org.lgna.croquet.meta.MetaState;
 import org.lgna.croquet.meta.TransactionHistoryTrackingMetaState;
 
-import edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.ExistingProjectComposite;
-import edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.NewProjectComposite;
 import edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.OpenProjectTab;
 import edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.SelectPuzzleComposite;
-import edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.WelcomeComposite;
 import edu.wustl.lookingglass.ide.perspectives.openproject.views.OpenProjectView;
 
 /**
@@ -67,9 +64,9 @@ import edu.wustl.lookingglass.ide.perspectives.openproject.views.OpenProjectView
  */
 public class OpenProjectComposite extends org.lgna.croquet.SimpleComposite<OpenProjectView> {
 
-	private final NewProjectComposite newTab = new NewProjectComposite();
-	private final ExistingProjectComposite existingTab = new ExistingProjectComposite();
-	private final WelcomeComposite welcomeTab = new WelcomeComposite();
+	//	private final NewProjectComposite newTab = new NewProjectComposite();
+	//	private final ExistingProjectComposite existingTab = new ExistingProjectComposite();
+	//	private final WelcomeComposite welcomeTab = new WelcomeComposite();
 	private final SelectPuzzleComposite puzzleTab = new SelectPuzzleComposite();
 
 	private final Operation returnToPreviousProjectOperation = this.createActionOperation( "returnToPreviousProjectOperation", new Action() {
@@ -81,7 +78,7 @@ public class OpenProjectComposite extends org.lgna.croquet.SimpleComposite<OpenP
 		}
 	} );
 
-	private final ImmutableDataTabState<OpenProjectTab> tabState = this.createImmutableTabState( "tabState", 0, OpenProjectTab.class, this.welcomeTab, this.newTab, this.existingTab, this.puzzleTab );
+	private final ImmutableDataTabState<OpenProjectTab> tabState = this.createImmutableTabState( "tabState", 0, OpenProjectTab.class, this.puzzleTab );
 
 	private final class SelectedUriProjectLoaderMetaState extends TransactionHistoryTrackingMetaState<UriProjectLoader> {
 
@@ -118,12 +115,12 @@ public class OpenProjectComposite extends org.lgna.croquet.SimpleComposite<OpenP
 		for( OpenProjectTab tab : this.tabState ) {
 			this.tabState.getItemSelectedState( tab ).initializeIfNecessary();
 		}
-		this.tabState.getItemSelectedState( welcomeTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.welcomeTab" ) );
-		this.welcomeTab.setTitleText( this.findLocalizedText( "tabState.welcomeTab" ) );
-		this.tabState.getItemSelectedState( newTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.newTab" ) );
-		this.newTab.setTitleText( this.findLocalizedText( "tabState.newTab" ) );
-		this.tabState.getItemSelectedState( existingTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.existingTab" ) );
-		this.existingTab.setTitleText( this.findLocalizedText( "tabState.existingTab" ) );
+		//		this.tabState.getItemSelectedState( welcomeTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.welcomeTab" ) );
+		//		this.welcomeTab.setTitleText( this.findLocalizedText( "tabState.welcomeTab" ) );
+		//		this.tabState.getItemSelectedState( newTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.newTab" ) );
+		//		this.newTab.setTitleText( this.findLocalizedText( "tabState.newTab" ) );
+		//		this.tabState.getItemSelectedState( existingTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.existingTab" ) );
+		//		this.existingTab.setTitleText( this.findLocalizedText( "tabState.existingTab" ) );
 		this.tabState.getItemSelectedState( puzzleTab ).setTextForBothTrueAndFalse( this.findLocalizedText( "tabState.puzzleTab" ) );
 		this.puzzleTab.setTitleText( this.findLocalizedText( "tabState.puzzleTab" ) );
 	}
@@ -136,16 +133,20 @@ public class OpenProjectComposite extends org.lgna.croquet.SimpleComposite<OpenP
 		return this.returnToPreviousProjectOperation;
 	}
 
-	public NewProjectComposite getNewProjectComposite() {
-		return this.newTab;
-	}
+	//	public NewProjectComposite getNewProjectComposite() {
+	//		return this.newTab;
+	//	}
+	//
+	//	public ExistingProjectComposite getExistingProjectComposite() {
+	//		return this.existingTab;
+	//	}
+	//
+	//	public WelcomeComposite getWelcomeComposite() {
+	//		return this.welcomeTab;
+	//	}
 
-	public ExistingProjectComposite getExistingProjectComposite() {
-		return this.existingTab;
-	}
-
-	public WelcomeComposite getWelcomeComposite() {
-		return this.welcomeTab;
+	public SelectPuzzleComposite getPuzzlesComposite() {
+		return this.puzzleTab;
 	}
 
 	@Override

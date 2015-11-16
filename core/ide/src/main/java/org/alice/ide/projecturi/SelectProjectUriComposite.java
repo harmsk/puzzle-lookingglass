@@ -48,7 +48,7 @@ package org.alice.ide.projecturi;
  */
 public final class SelectProjectUriComposite extends org.lgna.croquet.SingleValueCreatorInputDialogCoreComposite<org.lgna.croquet.views.Panel, org.alice.ide.uricontent.UriProjectLoader> {
 	private final ErrorStatus noSelectionError = this.createErrorStatus( "noSelectionError" );
-	private final StartersTab startersTab = new StartersTab();
+	//	private final StartersTab startersTab = new StartersTab();
 	private final TemplatesTab templatesTab = new TemplatesTab();
 	private final MyProjectsTab myProjectsTab = new MyProjectsTab();
 	private final RecentProjectsTab recentProjectsTab = new RecentProjectsTab();
@@ -58,7 +58,7 @@ public final class SelectProjectUriComposite extends org.lgna.croquet.SingleValu
 			-1,
 			SelectUriTab.class,
 			this.templatesTab,
-			this.startersTab,
+			//			this.startersTab,
 			this.myProjectsTab,
 			this.recentProjectsTab,
 			this.fileSystemTab );

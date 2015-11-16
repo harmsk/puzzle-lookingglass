@@ -43,6 +43,8 @@
 
 package org.alice.ide.projecturi;
 
+import java.util.Arrays;
+
 /**
  * @author Dennis Cosgrove
  */
@@ -59,6 +61,7 @@ public final class DirectoryUriListData extends org.lgna.croquet.data.Refreshabl
 		if( directory != null ) {
 			java.net.URI[] uris;
 			java.io.File[] files = org.lgna.project.io.IoUtilities.listProjectFiles( directory );
+			Arrays.sort( files );
 			final int N = files.length;
 			uris = new java.net.URI[ N ];
 			for( int i = 0; i < N; i++ ) {

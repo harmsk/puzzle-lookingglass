@@ -63,7 +63,7 @@ public class OpenProjectOperation extends ReturnToOpenProjectPerspective {
 
 	@Override
 	protected edu.wustl.lookingglass.ide.perspectives.openproject.projectselectionsource.OpenProjectTab getTabForReturn( edu.wustl.lookingglass.ide.perspectives.openproject.OpenProjectComposite composite ) {
-		return composite.getExistingProjectComposite();
+		return null;//composite.getExistingProjectComposite();
 	}
 
 }

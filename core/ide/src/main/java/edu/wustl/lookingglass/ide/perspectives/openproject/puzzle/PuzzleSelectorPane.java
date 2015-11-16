@@ -49,6 +49,7 @@ import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
+import org.alice.ide.IDE;
 import org.lgna.croquet.OverlayPane;
 import org.lgna.croquet.icon.IconSize;
 import org.lgna.croquet.views.AbstractWindow;
@@ -87,8 +88,9 @@ public class PuzzleSelectorPane extends FxComponent {
 	@FXML private VBox puzzleBox;
 	@FXML private TilePane puzzleGrid;
 
-	@FXML private TitledPane completedPane;
-	@FXML private VBox completedBox;
+	@FXML private TitledPane myPuzzlePane;
+	@FXML private VBox myPuzzleBox;
+	@FXML private TilePane myPuzzleGrid;
 
 	private SelectPuzzleComposite composite;
 	private OverlayPane playOverlay;
@@ -103,15 +105,24 @@ public class PuzzleSelectorPane extends FxComponent {
 		this.bubbleBox.getChildren().add( this.bubble.getRootNode() );
 
 		this.puzzlePane.setGraphic( LookingGlassTheme.getFxImageView( "puzzle", IconSize.SMALL ) );
-		this.completedPane.setGraphic( LookingGlassTheme.getFxImageView( "puzzle-completed", IconSize.SMALL ) );
+		this.myPuzzlePane.setGraphic( LookingGlassTheme.getFxImageView( "puzzle", IconSize.SMALL ) );
 
 		// Load the puzzles
-		File puzzleDir = new File( edu.cmu.cs.dennisc.app.ApplicationRoot.getApplicationDirectory() + "/puzzles" );
-		File[] files = puzzleDir.listFiles();
+		loadThumbnails( new File( edu.cmu.cs.dennisc.app.ApplicationRoot.getApplicationDirectory() + "/puzzles" ), this.puzzleGrid );
+		loadThumbnails( IDE.getActiveInstance().getMyProjectsDirectory(), this.myPuzzleGrid );
+		this.myPuzzleGrid.getChildren().add( new PuzzleSelectorBrowseThumbnail( this ).getRootNode() );
+
+		// TODO: this should not be unnecessary if we ever get rid of swing and croquet. But for some reason
+		// javafx scrolls bars will not show up "as needed" when nested in swing/croquet components.
+		this.scrollPane.vbarPolicyProperty().set( ScrollBarPolicy.ALWAYS );
+	}
+
+	public void loadThumbnails( File dir, TilePane pane ) {
+		File[] files = dir.listFiles();
 		Arrays.sort( files );
 		for( File puzzleFile : files ) {
 			PuzzleSelectorThumbnail thumb = new PuzzleSelectorThumbnail( PuzzleType.PUZZLE );
-			this.puzzleGrid.getChildren().add( thumb.getRootNode() );
+			pane.getChildren().add( thumb.getRootNode() );
 
 			// Load the project in a background thread since we take so
 			// ridiculous long to load projects from disk. This way
@@ -126,18 +137,6 @@ public class PuzzleSelectorPane extends FxComponent {
 				} );
 			} );
 		}
-
-		// TODO: maybe bring this back too...
-		setCompletedPuzzlesShowing( false );
-
-		// TODO: this should not be unnecessary if we ever get rid of swing and croquet. But for some reason
-		// javafx scrolls bars will not show up "as needed" when nested in swing/croquet components.
-		this.scrollPane.vbarPolicyProperty().set( ScrollBarPolicy.ALWAYS );
-	}
-
-	public void setCompletedPuzzlesShowing( boolean shouldShow ) {
-		this.completedPane.setVisible( shouldShow );
-		this.completedPane.setManaged( shouldShow );
 	}
 
 	public void playPuzzle( PuzzleProject project ) {

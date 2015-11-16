@@ -43,6 +43,9 @@
 
 package org.alice.ide.x;
 
+import org.lgna.project.ast.DoInOrder;
+import org.lgna.project.ast.DoTogether;
+
 /**
  * @author Dennis Cosgrove
  */
@@ -60,9 +63,16 @@ public abstract class I18nFactory {
 			return null;
 		} else {
 			org.lgna.croquet.views.Label rv = new org.lgna.croquet.views.Label( textChunk.getText() );
+
+			if( owner instanceof DoTogether ) {
+				rv.setText( "<html>Do <i>together</i></html>" );
+			} else if( owner instanceof DoInOrder ) {
+				rv.setText( "<html>Do <u>in order</u></html>" );
+			}
+
 			if( ( owner instanceof org.lgna.project.ast.AbstractStatementWithBody ) || ( owner instanceof org.lgna.project.ast.ConditionalStatement ) ) {
 				rv.changeFont( edu.cmu.cs.dennisc.java.awt.font.TextWeight.BOLD );
-				rv.setBorder( javax.swing.BorderFactory.createEmptyBorder( 3, 4, 0, 0 ) );
+				rv.setBorder( javax.swing.BorderFactory.createEmptyBorder( 3, 4, 2, 0 ) );
 			}
 			if( ( owner instanceof org.lgna.project.ast.MethodInvocation ) && org.alice.stageide.ast.JointMethodUtilities.isJointGetter( ( (org.lgna.project.ast.MethodInvocation)owner ).method.getValue() ) ) {
 				rv.setBorder( javax.swing.BorderFactory.createEmptyBorder( 0, 5, 0, 8 ) );

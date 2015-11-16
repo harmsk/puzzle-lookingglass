@@ -55,11 +55,11 @@
                   <Insets />
                </VBox.margin>
             </TitledPane>
-            <TitledPane fx:id="completedPane" animated="false" collapsible="false" styleClass="puzzle-section-header" text="%PuzzleSelectorPane.completedTitle">
+            <TitledPane fx:id="myPuzzlePane" animated="false" collapsible="false" styleClass="puzzle-section-header" text="My Puzzles">
                <content>
-                  <VBox fx:id="completedBox" styleClass="puzzle-section-content">
+                  <VBox fx:id="myPuzzleBox" styleClass="puzzle-section-content">
                      <children>
-                        <TilePane fx:id="completedGrid" prefColumns="0" prefRows="0" styleClass="puzzle-grid" />
+                        <TilePane fx:id="myPuzzleGrid" prefColumns="0" prefRows="0" styleClass="puzzle-grid" />
                      </children>
                   </VBox>
                </content>

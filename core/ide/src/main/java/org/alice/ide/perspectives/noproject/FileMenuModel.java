@@ -48,7 +48,11 @@ package org.alice.ide.perspectives.noproject;
 public class FileMenuModel extends org.lgna.croquet.PredeterminedMenuModel {
 	private static org.lgna.croquet.StandardMenuItemPrepModel[] createMenuItemPrepModels( org.alice.ide.ProjectDocumentFrame projectDocumentFrame ) {
 		java.util.List<org.lgna.croquet.StandardMenuItemPrepModel> list = edu.cmu.cs.dennisc.java.util.Lists.newLinkedList();
+
+		list.add( projectDocumentFrame.getNewProjectOperation().getMenuItemPrepModel() );
+		list.add( projectDocumentFrame.getOpenProjectOperation().getMenuItemPrepModel() );
 		list.add( org.alice.ide.recentprojects.RecentProjectsMenuModel.getInstance() );
+
 		if( edu.cmu.cs.dennisc.java.lang.SystemUtilities.isMac() ) {
 			//pass
 		} else {

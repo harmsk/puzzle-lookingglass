@@ -42,6 +42,8 @@
  *******************************************************************************/
 package org.alice.ide;
 
+import java.awt.Color;
+
 /**
  * @author Dennis Cosgrove
  */
@@ -165,7 +167,9 @@ public class DefaultTheme implements Theme {
 			if( org.lgna.project.ast.Comment.class.isAssignableFrom( cls ) ) {
 				return edu.cmu.cs.dennisc.java.awt.ColorUtilities.createGray( 245 );
 			} else {
-				if( edu.cmu.cs.dennisc.java.lang.ClassUtilities.isAssignableToAtLeastOne( cls, org.lgna.project.ast.AbstractStatementWithBody.class, org.lgna.project.ast.ConditionalStatement.class, org.lgna.project.ast.LocalDeclarationStatement.class ) ) {
+				if( edu.cmu.cs.dennisc.java.lang.ClassUtilities.isAssignableToAtLeastOne( cls, org.lgna.project.ast.DoTogether.class, org.lgna.project.ast.EachInArrayTogether.class ) ) {
+					return new Color( 0xC3C9EF );
+				} else if( edu.cmu.cs.dennisc.java.lang.ClassUtilities.isAssignableToAtLeastOne( cls, org.lgna.project.ast.AbstractStatementWithBody.class, org.lgna.project.ast.ConditionalStatement.class, org.lgna.project.ast.LocalDeclarationStatement.class ) ) {
 					return getControlFlowStatementColor();
 				} else {
 					return getProcedureStatementColor();

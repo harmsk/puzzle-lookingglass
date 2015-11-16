@@ -49,10 +49,9 @@ public class HelpMenuModel extends org.lgna.croquet.PredeterminedMenuModel {
 	private static org.lgna.croquet.StandardMenuItemPrepModel[] createMenuItemPrepModels( org.alice.ide.IdeApp app ) {
 		java.util.List<org.lgna.croquet.StandardMenuItemPrepModel> list = edu.cmu.cs.dennisc.java.util.Lists.newLinkedList(
 				app.getHelpDialogLaunchOperation().getMenuItemPrepModel(),
-				app.getGraphicsHelpDialogLaunchOperation().getMenuItemPrepModel(),
+				//				app.getGraphicsHelpDialogLaunchOperation().getMenuItemPrepModel(),
 				org.lgna.croquet.MenuModel.SEPARATOR,
-				app.getShowSystemPropertiesDialogLaunchOperation().getMenuItemPrepModel()
-				);
+				app.getShowSystemPropertiesDialogLaunchOperation().getMenuItemPrepModel() );
 		if( edu.cmu.cs.dennisc.java.lang.SystemUtilities.isMac() ) {
 			//pass
 		} else {

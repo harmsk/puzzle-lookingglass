@@ -44,14 +44,13 @@
  *******************************************************************************/
 package edu.wustl.lookingglass.issue;
 
-import javafx.fxml.FXML;
-
 import org.alice.ide.perspectives.noproject.NoProjectPerspective;
 
 import edu.wustl.lookingglass.croquetfx.components.DialogOptionButton;
 import edu.wustl.lookingglass.croquetfx.components.DialogOptionButtonGroup;
 import edu.wustl.lookingglass.ide.LookingGlassIDE;
 import edu.wustl.lookingglass.ide.perspectives.openproject.OpenProjectComposite;
+import javafx.fxml.FXML;
 
 /**
  * @author Michael Pogran
@@ -77,15 +76,15 @@ public class InitializationExceptionPane extends ExceptionPane {
 	}
 
 	private void handleHelpAction( javafx.event.ActionEvent event ) {
-		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnFxThread( ( ) -> {
+		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnFxThread( () -> {
 			getDialog().close();
 		} );
 
-		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( ( ) -> {
+		edu.wustl.lookingglass.croquetfx.ThreadHelper.runOnSwingThread( () -> {
 			NoProjectPerspective noProjectPerspective = LookingGlassIDE.getActiveInstance().getDocumentFrame().getNoProjectPerspective();
 			OpenProjectComposite openProjectComposite = noProjectPerspective.getMainComposite();
 			LookingGlassIDE.getActiveInstance().setPerspective( noProjectPerspective );
-			openProjectComposite.getTabState().setValueTransactionlessly( openProjectComposite.getExistingProjectComposite() );
+			openProjectComposite.getTabState().setValueTransactionlessly( openProjectComposite.getPuzzlesComposite() );
 		} );
 	}
 }

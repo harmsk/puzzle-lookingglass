@@ -42,6 +42,8 @@
  *******************************************************************************/
 package org.alice.stageide.openprojectpane.components;
 
+import org.alice.ide.projecturi.views.SnapshotIcon;
+
 public class TemplatesTabContentPane extends org.alice.ide.projecturi.views.ListContentPanel {
 	public TemplatesTabContentPane( org.alice.ide.projecturi.TemplatesTab composite ) {
 		super( composite );
@@ -58,7 +60,7 @@ public class TemplatesTabContentPane extends org.alice.ide.projecturi.views.List
 				javax.swing.Icon icon = imageIcon != null ? new org.alice.ide.projecturi.views.SnapshotIcon( imageIcon.getImage() ) : null;
 				rv.setText( text );
 				//<lg> modified  size to fit multiple snapshots on single line in list
-				rv.setIcon( new edu.cmu.cs.dennisc.javax.swing.icons.ScaledIcon( icon, 180, 101 ) );
+				rv.setIcon( new edu.cmu.cs.dennisc.javax.swing.icons.ScaledIcon( icon, SnapshotIcon.WIDTH, SnapshotIcon.HEIGHT ) );
 				//<lg>
 				return rv;
 			}

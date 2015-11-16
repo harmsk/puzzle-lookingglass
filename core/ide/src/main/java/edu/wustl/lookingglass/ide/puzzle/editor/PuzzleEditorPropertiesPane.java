@@ -48,6 +48,9 @@ import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
+import org.alice.stageide.ast.StoryApiSpecificAstUtilities;
+import org.lgna.project.Project;
+
 import edu.cmu.cs.dennisc.java.net.UriUtilities;
 import edu.cmu.cs.dennisc.java.util.logging.Logger;
 import edu.wustl.lookingglass.croquetfx.FxComponent;
@@ -78,15 +81,19 @@ public class PuzzleEditorPropertiesPane extends FxComponent {
 	private void handleLoadPuzzleAction( ActionEvent event ) {
 		ThreadHelper.runOnSwingThread( () -> {
 			final LookingGlassIDE ide = LookingGlassIDE.getActiveInstance();
-			ide.setCursor( java.awt.Cursor.WAIT_CURSOR );
+			Project project = ide.getUpToDateProject();
 
-			CompletionPuzzle puzzle = new CompletionPuzzle( ide.getUpToDateProject() );
-
-			javax.swing.SwingUtilities.invokeLater( () -> {
-				puzzle.beginPuzzle( () -> {
-					ide.getDocumentFrame().setToCodePerspectiveTransactionlessly();
+			if( StoryApiSpecificAstUtilities.getUserMain( project.getProgramType() ).body.getValue().statements.size() > 0 ) {
+				ide.setCursor( java.awt.Cursor.WAIT_CURSOR );
+				CompletionPuzzle puzzle = new CompletionPuzzle( project );
+				javax.swing.SwingUtilities.invokeLater( () -> {
+					puzzle.beginPuzzle( () -> {
+						ide.getDocumentFrame().setToCodePerspectiveTransactionlessly();
+					} );
 				} );
-			} );
+			} else {
+				Logger.warning( "empty body, statements.size() == 0" );
+			}
 		} );
 	}
 

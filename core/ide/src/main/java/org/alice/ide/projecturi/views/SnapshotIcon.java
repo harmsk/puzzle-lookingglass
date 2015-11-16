@@ -46,8 +46,8 @@ package org.alice.ide.projecturi.views;
  * @author Dennis Cosgrove
  */
 public class SnapshotIcon implements javax.swing.Icon {
-	private static final int WIDTH = 224;
-	private static final int HEIGHT = ( WIDTH * 9 ) / 16;
+	public static final int WIDTH = 224;
+	public static final int HEIGHT = ( WIDTH * 9 ) / 16;
 	private final java.awt.Image image;
 
 	public SnapshotIcon( java.awt.Image image ) {
